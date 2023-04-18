@@ -5,7 +5,7 @@ const path = require("path");
 const p = path.join(
   path.dirname(process.mainModule.filename),
   "data",
-  "genreList.json"
+  "MovieList.json"
 );
 
 const getGenrelist = () => {
@@ -24,7 +24,7 @@ module.exports = class Movies {
   }
 
   static takeTrending(ham) {
-    return JSON.parse(
+    const dataTrending = JSON.parse(
       fs.readFileSync(p, "utf-8", (err, data) => {
         if (err) {
           console.log(err);
@@ -33,6 +33,12 @@ module.exports = class Movies {
         console.log(data);
       })
     );
+    return {
+      results: dataTrending,
+      page: 1,
+      total_pages:
+        dataTrending.length > 20 ? (dataTrending.length / 20).toFixed(0) : 1,
+    };
   }
 };
 

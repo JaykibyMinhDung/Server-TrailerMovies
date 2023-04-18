@@ -15,7 +15,7 @@ exports.showFile = (req, res, next) => {
   //     res.send("Loading...");
   //     console.log(ham);
   //   });
-  res.send(Movies.takeTrending());
+  res.status(200).send(Movies.takeTrending());
 };
 
 // Tạo hàm lọc lượt xem cao của movielist
