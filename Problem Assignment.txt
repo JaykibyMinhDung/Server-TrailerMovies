@@ -1,0 +1,14 @@
+// Problem ( vấn đề )
+
+Paging: Dùng hàm splice hoặc hàm slice cắt nhỏ mảng thành các phần bằng nhau, sau đó in bằng map ra browse
+
+Middleware: Có thể vừa gửi vừa nhận dữ liệu trong cùng một hàm được không. Gửi dữ liệu ở hàm tạo ra class mới và nhận dữ liệu lọc từ hàm đó luôn ? Trả lời: Làm được bằng cách dùng hàm static và truyển vào nó một đối số từ param. Sau đó hàm sẽ thay đối số đó và trả kết quả ở các phần gọi sau giống như save().then(results => console.log(results)).
+
+Đối với phần lấy dữ liệu từ param thì ta dùng chức năng req.body hoặc tìm hiểu thêm về phần req.param
+
+Đối với việc tạo id và param trên link thì dùng a href để tạo link
+
+// Improve (cải thiện)
+
+Tối ưu lại code ở phần models
+

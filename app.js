@@ -17,8 +17,13 @@ const genreList = require("./routes/movies");
 // Định nghĩa route trong app
 app.use("/api", genreList);
 
-app.use("/", function (req, res) {
+app.use(function (req, res) {
   res.send("Trailer Movies");
+});
+
+app.use((req, res, next) => {
+  // res.status(404).render("404", { pageTitle: "Page Not Found", path: "/404" });
+  res.status(404).send("Page Not Found");
 });
 
 app.listen(8080);
