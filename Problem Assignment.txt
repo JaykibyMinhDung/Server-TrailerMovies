@@ -8,6 +8,12 @@ Middleware: Có thể vừa gửi vừa nhận dữ liệu trong cùng một hà
 
 Đối với việc tạo id và param trên link thì dùng a href để tạo link
 
+Tao them cai ham de xac thuc token cua nguoi dung
+
+mặc định page = 1 ở url nếu người dùng không truyền params
+
+Lỗi không truyền params ở tất cả các link sẽ truyền lỗi (400)
+
 // Improve (cải thiện)
 
 Tối ưu lại code ở phần models

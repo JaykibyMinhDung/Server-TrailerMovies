@@ -36,7 +36,7 @@ module.exports = class Movies {
     this.id = m;
   }
 
-  static takeTrending() {
+  static takeTrending(start, end) {
     const dataTrending = JSON.parse(
       fs.readFileSync(p, "utf-8", (err, data) => {
         if (err) {
@@ -50,7 +50,7 @@ module.exports = class Movies {
       (a, b) => b.popularity - a.popularity
     );
     return {
-      results: sortDataTrending,
+      results: sortDataTrending.slice(start, end),
       page: 1,
       total_pages:
         sortDataTrending.length > 20
@@ -59,7 +59,7 @@ module.exports = class Movies {
     };
   }
 
-  static takeRating(ham) {
+  static takeRating(start, end) {
     const dataRating = JSON.parse(
       fs.readFileSync(p, "utf-8", (err, data) => {
         if (err) {
@@ -73,7 +73,7 @@ module.exports = class Movies {
       (a, b) => b.vote_average - a.vote_average
     );
     return {
-      results: sortDataRating,
+      results: sortDataRating.slice(start, end),
       page: 1,
       total_pages:
         sortDataRating.length > 20
@@ -82,7 +82,7 @@ module.exports = class Movies {
     };
   }
 
-  static takegenre(test) {
+  static takegenre(test, start, end) {
     const data = JSON.parse(
       fs.readFileSync(p, "utf-8", (err, data) => {
         if (err) {
@@ -100,20 +100,26 @@ module.exports = class Movies {
         }
       })
     );
-    const genreName = genreMovies.find((e) => e.id === test); // Lay object genre tuong ung
-    const CompareIdGenre = (genreid) => {
-      return genreid.find((id) => id === test); // Trả về một genre-id mà khách đã nhập
-    };
-    const RelateGenreMovies = data.filter((id) => CompareIdGenre(id.genre_ids)); // Trả về toàn bộ movies có genre-id tương ứng
-    return {
-      results: RelateGenreMovies,
-      page: 1,
-      total_pages:
-        RelateGenreMovies.length > 20
-          ? (RelateGenreMovies.length / 20).toFixed(0)
-          : 1,
-      genre_name: genreName.name,
-    };
+    const genreName = genreMovies.find((e) => e.id === Number(test)); // Lay object genre tuong ung
+    if (genreName) {
+      const CompareIdGenre = (genreid) => {
+        return genreid.find((id) => id === Number(test)); // Trả về một genre-id mà khách đã nhập
+      };
+      const RelateGenreMovies = data.filter((id) =>
+        CompareIdGenre(id.genre_ids)
+      ); // Trả về toàn bộ movies có genre-id tương ứng
+      return {
+        results: RelateGenreMovies.slice(start, end),
+        page: 1,
+        total_pages:
+          RelateGenreMovies.length > 20
+            ? (RelateGenreMovies.length / 20).toFixed(0)
+            : 1,
+        genre_name: genreName.name,
+      };
+    } else {
+      return genreName;
+    }
   }
 
   static takeVideoList(idvideo) {
@@ -125,21 +131,62 @@ module.exports = class Movies {
         }
       })
     );
-    const VirusfindMovie = Videolist.find((movie) => movie.id === idvideo);
-    const VirusconfirmHastrailer = (virus) => {
-      return virus.videos.filter(
-        (e) =>
-          e.site === "YouTube" &&
-          e.official === true &&
-          e.type === ("Trailer" || "Teaser")
-      );
+    const VirusfindMovie = Videolist.find(
+      (movie) => movie.id === Number(idvideo)
+    );
+    if (VirusfindMovie) {
+      const VirusconfirmHastrailer = (virus) => {
+        return virus.videos.filter(
+          (e) =>
+            e.site === "YouTube" &&
+            e.official === true &&
+            e.type === ("Trailer" || "Teaser")
+        );
+      };
+      const VirusFindPublished = VirusconfirmHastrailer(VirusfindMovie);
+      const Trailer =
+        VirusFindPublished.length > 1
+          ? VirusFindPublished.sort((a, b) => a.published_at - b.published_at)
+          : VirusFindPublished;
+      return Trailer[0];
+    } else {
+      return VirusfindMovie;
+    }
+  }
+
+  static searchData(keyword, start, end) {
+    const searchMovie = JSON.parse(
+      fs.readFileSync(p, "utf-8", (err, data) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        console.log(data);
+      })
+    );
+    const findKeywordDetail = (title, overview) => {
+      if (title && overview) {
+        const arrtitle = title.toLowerCase().split(" ");
+        const arroverview = overview.toLowerCase().split(" ");
+        const arrKeyword = keyword.toLowerCase().split(" ");
+        return (
+          arrtitle.find((e) => e === arrKeyword[0]) ||
+          arroverview.find((e) => e === arrKeyword[0])
+        );
+      }
     };
-    const VirusFindPublished = VirusconfirmHastrailer(VirusfindMovie);
-    const Trailer =
-      VirusFindPublished.length > 1
-        ? VirusFindPublished.sort((a, b) => a.published_at - b.published_at)
-        : VirusFindPublished;
-    return Trailer[0];
+    const sortDataTrending = searchMovie.filter((e) =>
+      findKeywordDetail(e.title, e.overview)
+    );
+    return {
+      results: sortDataTrending.slice(start, end),
+      page: 1,
+      total_pages: Number(
+        sortDataTrending.length > 20
+          ? (sortDataTrending.length / 20).toFixed(0)
+          : 1
+      ),
+    };
   }
 };
 
