@@ -6,39 +6,49 @@ const path = require("path");
 
 const moviescontroller = require("../controllers/movies");
 
-const router = express.Router();
+const isAuthen = require("../middleware/AuthenToken");
 
+const router = express.Router();
 // router.get("/movies/trending", moviescontroller.DataTrendingMovies);
 
 router.get(
-  "/movies/trending/page=/:numberPage",
+  "/trending/:numberpage/:usertoken",
+  isAuthen.AuthenticationToken,
+  moviescontroller.DataTrendingMovies
+);
+
+router.get(
+  "/trending/:usertoken",
+  isAuthen.AuthenticationToken,
   moviescontroller.DataTrendingMovies
 );
 
 // router.get("/movies/top-rate", moviescontroller.DataRatingMovies);
 
 router.get(
-  "/movies/highrating/page=/:numberPage",
+  "/highrating/:numberpage/:usertoken",
+  isAuthen.AuthenticationToken,
+  moviescontroller.DataRatingMovies
+);
+
+router.get(
+  "/highrating/:usertoken",
+  isAuthen.AuthenticationToken,
   moviescontroller.DataRatingMovies
 );
 
 // router.get("/movies/discover", moviescontroller.DataGenreMovies5);
 
 router.get(
-  "/movies/discover/page=/:numberpage/:GenreId", // /movies/discover/page=/1/12345367
+  "/discover/:numberpage/:usertoken/:GenreId",
+  isAuthen.AuthenticationToken, // /movies/discover/1/8qlOkxz4wq
   moviescontroller.DataGenreMovies
 );
 
-// router.post(
-//   "/movies/video", // /movies/discover/page=/1/12345367
-//   moviescontroller.DataTrailerMovies
-// );
-
 router.get(
-  "/movies/video/:film_id", // /movies/discover/page=/1/12345367
-  moviescontroller.DataTrailerMovies
+  "/discover/:usertoken/:GenreId",
+  isAuthen.AuthenticationToken, // /movies/discover/1/8qlOkxz4wq
+  moviescontroller.DataGenreMovies
 );
-
-// router.post("/api/movies/trending", moviescontroller);
 
 module.exports = router;
