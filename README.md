@@ -1,4 +1,6 @@
 # Server-TrailerMovies
+Front-end: React JS
+- link github: https://github.com/JaykibyMinhDung/Trailer-Movies
 NodeJS: Chức năng chính của dự án này ( Xây, lọc và trả lại API đúng yêu cầu bên react )
 - Tạo cơ sở dữ liệu đã thu thập từ API tổng
 - Lấy dữ liệu đã lấy và thao tác với chúng cho giống API ở trên 
