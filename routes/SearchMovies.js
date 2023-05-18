@@ -11,7 +11,7 @@ const router = express.Router();
 router.post(
   "/video/:usertoken/:film_id",
   isAuthen.AuthenticationToken,
-  moviescontroller.DataTrailerMovies
+  moviescontroller.DataTrailerMovies // http://localhost:8080/api/movies/video/8qlOkxz4wq/361743
 );
 
 // router.get(
@@ -36,7 +36,7 @@ router.post(
 router.post(
   "/search/:usertoken/:keyword",
   isAuthen.AuthenticationToken,
-  moviescontroller.SearchDataMovies
+  moviescontroller.SearchDataMovies // http://localhost:8080/api/movies/search/8qlOkxz4wq/top gun
 );
 
 module.exports = router;

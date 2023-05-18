@@ -16,7 +16,7 @@ const Search = require("./routes/SearchMovies");
 const isAuthenroute = require("./middleware/AuthenToken");
 
 // const isAuthenroute = require("./routes/token");
-const pathAPIMovies = ["search", "video", "discover", "trending", "highrating"];
+const pathAPIMovies = ["search", "video", "discover", "trending", "top-rate"];
 
 // Định nghĩa route trong app
 

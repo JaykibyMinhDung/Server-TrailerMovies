@@ -14,7 +14,7 @@ const router = express.Router();
 router.get(
   "/trending/:numberpage/:usertoken",
   isAuthen.AuthenticationToken,
-  moviescontroller.DataTrendingMovies
+  moviescontroller.DataTrendingMovies // // http://localhost:8080/api/movies/trending/2/8qlOkxz4wq
 );
 
 router.get(
@@ -26,13 +26,13 @@ router.get(
 // router.get("/movies/top-rate", moviescontroller.DataRatingMovies);
 
 router.get(
-  "/highrating/:numberpage/:usertoken",
+  "/top-rate/:numberpage/:usertoken",
   isAuthen.AuthenticationToken,
-  moviescontroller.DataRatingMovies
+  moviescontroller.DataRatingMovies // http://localhost:8080/api/movies/top-rate/2/8qlOkxz4wq
 );
 
 router.get(
-  "/highrating/:usertoken",
+  "/top-rate/:usertoken",
   isAuthen.AuthenticationToken,
   moviescontroller.DataRatingMovies
 );
@@ -40,14 +40,14 @@ router.get(
 // router.get("/movies/discover", moviescontroller.DataGenreMovies5);
 
 router.get(
-  "/discover/:numberpage/:usertoken/:GenreId",
-  isAuthen.AuthenticationToken, // /movies/discover/1/8qlOkxz4wq
+  "/discover/:numberpage/:GenreId/:usertoken",
+  isAuthen.AuthenticationToken, // http://localhost:8080/api/movies/discover/2/18/8qlOkxz4wq
   moviescontroller.DataGenreMovies
 );
 
 router.get(
-  "/discover/:usertoken/:GenreId",
-  isAuthen.AuthenticationToken, // /movies/discover/1/8qlOkxz4wq
+  "/discover/:GenreId/:usertoken",
+  isAuthen.AuthenticationToken, // http://localhost:8080/api/movies/discover/18/8qlOkxz4wq
   moviescontroller.DataGenreMovies
 );
 

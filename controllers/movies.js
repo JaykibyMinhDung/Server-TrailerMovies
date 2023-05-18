@@ -54,8 +54,9 @@ exports.DataGenreMovies = (req, res, next) => {
       i = pageNumber * 20 + 1; // Lấy i để làm đối số bắt đầu cắt, để phân trang
       start = i - 20;
     }
+    // !Number(pageNumber) ||
     if (!Number(idgenre)) {
-      res.status(400).json({ message: "Not found that gerne id" }); // Khác số
+      res.status(400).json({ message: "Not found gerne parram" }); // Khác số
       throw 400;
     }
     if (!Movies.takegenre(idgenre)) {
@@ -106,13 +107,14 @@ exports.SearchDataMovies = (req, res, next) => {
     if (!searchData) {
       throw new Error("moviescontroler" + searchData);
     }
-    if (a.results.length < 1 || a) {
+    if (a.results.length) {
       res.status(200).json(a);
     } else {
+      // res.status(400).json({ message: "Not found keyword param" });
       res.status(400).json("Not found keyword param");
     }
   } catch (error) {
-    res.status(400).json("Not found keyword param");
+    res.status(400).json({ message: "Not found keyword param" });
     console.error(error);
   }
 
