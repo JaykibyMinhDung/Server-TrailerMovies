@@ -34,7 +34,9 @@ router.post(
 // );
 
 router.post(
-  "/search/:usertoken/:keyword",
+  `/search/:usertoken/:keyword`,
+  // /:genre/:mediatype/:language/:year
+  // Truyền tham số mặc định vào khi gửi sẽ tránh của việc bỏ trống kí tự dẫn đến sai endpoint. Các tham số khi được gửi mặc định sẽ lọc để biết được đâu là tham số k được người dùng nhập. Chức năng tìm keywords vẫn giữ nguyên nhưng chức năng nâng cao thì đã được cải thiện và không ảnh hưởng đến params
   isAuthen.AuthenticationToken,
   moviescontroller.SearchDataMovies // http://localhost:8080/api/movies/search/8qlOkxz4wq/top gun
 );

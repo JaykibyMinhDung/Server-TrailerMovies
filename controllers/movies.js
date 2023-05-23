@@ -94,6 +94,29 @@ exports.DataTrailerMovies = (req, res, next) => {
 };
 
 exports.SearchDataMovies = (req, res, next) => {
+  /*
+Nếu tất cả trả về = 0, thì viết như hàm ban đầu + 
+
+Lấy dữ liệu của file genre và file movies list, 
+genre sẽ tìm trong file genre
+
+mediatype, language, year sẽ tìm trong file movieList, nếu mà có sẽ xuất ra. Date sẽ dùng hàm new Date để trích xuất năm 
+
+Tạo một cái hàm nhỏ để lọc dữ liệu: dùng hàm filter lọc trong file các mảng có số 0 trả về underfine
+
+Lọc theo 2 cái if ( a && b ) TH1 : all = 0, TH2: ít nhất 1 tham số if ( a || b || c ) {
+  trước khi cho vào hàm lọc tổng thì cần phải xem cái này nào bằng 0, ít nhất 1 tham số sai sẽ trả về kết quả json{a: not movie theo data input }
+
+  truyền tham số a, b, c này vào để tìm trong filter (a, b, c có giá trị )
+}
+
+Nếu 1TH trả về = 0, thì viết như hàm ban đầu + 
+Nếu 2TH trả về = 0, thì viết như hàm ban đầu + 
+Nếu 3TH trả về = 0, thì viết như hàm ban đầu + 
+Nếu 4TH trả về = 0, thì viết như hàm ban đầu + 
+
+*/
+
   try {
     const searchData = req.params.keyword;
     const pageNumber = req.params.numberpage;
