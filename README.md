@@ -1,8 +1,16 @@
-# Server-TrailerMovies
-Front-end: React JS
-- link github: https://github.com/JaykibyMinhDung/Trailer-Movies
+# Restful APIs Movies
 
-NodeJS: Chức năng chính của dự án này ( Xây, lọc và trả lại API đúng yêu cầu bên react )
+Front-end: React JS ( localhost 3000 )
+- link Github: https://github.com/JaykibyMinhDung/Trailer-Movies
+
+NodeJS: Nodejs ( Localhost 8080 )
+
+Chức năng chính của dự án này ( Xây, lọc và trả lại API đúng yêu cầu bên react )
+
+skill: expressJS, create an endpoint, auth route by key
+
+Description: Create and take data from my folder. Search a movie by a lot of filters 
+
 - Tạo cơ sở dữ liệu đã thu thập từ API tổng
 - Lấy dữ liệu đã lấy và thao tác với chúng cho giống API ở trên 
   + Lọc các bộ phim có rate cao bằng middleware
@@ -13,6 +21,6 @@ NodeJS: Chức năng chính của dự án này ( Xây, lọc và trả lại AP
   + Bắt các lỗi phía browser và server. Gửi lên phía browse để front end dễ kiểm tra các chức xem đã hoạt động đúng chưa
 - Chỉnh sửa các lỗi liên quan đến route
 - Kết nối thành công giữa react và nodeJS bằng axios thay vì fetch
-- Test bằng post man
+- Test bằng postman
 
 // Đang cập nhật thêm feature trong tương lai
