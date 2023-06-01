@@ -90,7 +90,7 @@ module.exports = class Movies {
     }
   }
 
-  static takegenre(test, start, end) {
+  static takegenre(genre, start, end) {
     const data = JSON.parse(
       fs.readFileSync(p, "utf-8", (err, data) => {
         if (err) {
@@ -108,13 +108,13 @@ module.exports = class Movies {
         }
       })
     );
-    const genreName = genreMovies.find((e) => e.id === Number(test)); // Lay object genre tuong ung
+    const genreName = genreMovies.find((e) => e.id === Number(genre)); // Lay object genre tuong ung
     if (genreName) {
       const CompareIdGenre = (genreid) => {
-        return genreid.find((id) => id === Number(test)); // Trả về một genre-id mà khách đã nhập
+        return genreid.find((id) => id === Number(genre)); // Trả về một genre-id mà khách đã nhập
       };
-      const RelateGenreMovies = data.filter((id) =>
-        CompareIdGenre(id.genre_ids)
+      const RelateGenreMovies = data.filter((movie) =>
+        CompareIdGenre(movie.genre_ids)
       ); // Trả về toàn bộ movies có genre-id tương ứng
       return {
         results: RelateGenreMovies.slice(start, end),
@@ -162,6 +162,30 @@ module.exports = class Movies {
     }
   }
 
+  static searchAdvanceData() {
+    const genreMovies = JSON.parse(
+      fs.readFileSync(g, "utf-8", (err) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+      })
+    );
+    const searchMovie = JSON.parse(
+      fs.readFileSync(p, "utf-8", (err, data) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        console.log(data);
+      })
+    );
+    return {
+      genresId: genreMovies,
+      moviesList: searchMovie,
+    };
+  }
+
   static searchData(keyword, start, end) {
     const searchMovie = JSON.parse(
       fs.readFileSync(p, "utf-8", (err, data) => {
@@ -197,44 +221,3 @@ module.exports = class Movies {
     };
   }
 };
-
-// Lấy dữ liệu từ data xong thao tác logic để biến dữ liệu thô thành dữ liệu chuẩn để hiện ra màn hình
-
-// const Alldatamovies = JSON.parse(
-//   fs.readFileSync(p, "utf-8", (err, data) => {
-//     if (err) {
-//       console.log(err);
-//       return;
-//     }
-//     console.log(data);
-//   })
-// );
-
-// thu() {
-//   getAlldataMoviesList((data) => {
-//     const genreMovies = JSON.parse(
-//       fs.readFileSync(g, "utf-8", (err) => {
-//         if (err) {
-//           console.log(err);
-//           return;
-//         }
-//       })
-//     );
-//     const genreName = genreMovies.find((e) => e.id === 18); // Lay object genre tuong ung (this.id)
-//     const CompareIdGenre = (genreid) => {
-//       return genreid.find((id) => id === 18); // Trả về một genre-id mà khách đã nhập (this.id)
-//     };
-//     const RelateGenreMovies = data.filter((id) =>
-//       CompareIdGenre(id.genre_ids)
-//     ); // Trả về toàn bộ movies có genre-id tương ứng
-//     return {
-//       results: RelateGenreMovies,
-//       page: 1,
-//       total_pages:
-//         RelateGenreMovies.length > 20
-//           ? (RelateGenreMovies.length / 20).toFixed(0)
-//           : 1,
-//       genre_name: genreName.name,
-//     };
-//   });
-// }

@@ -14,3 +14,89 @@ Tối ưu lại code ở phần models
 
 
 git checkout c3cec6022ef0c9d4301ccaee430bb4f4b4cba064 controllers
+
+
+Advanced search ( Controllers movies )
+
+Nếu tất cả trả về = 0, thì viết như hàm ban đầu + 
+
+mediatype, language, year sẽ tìm trong file movieList, nếu mà có sẽ xuất ra. Date sẽ dùng hàm new Date để trích xuất năm 
+
+Tạo một cái hàm nhỏ để lọc dữ liệu: dùng hàm filter lọc trong file các mảng có số 0 trả về underfine
+
+Lọc theo 2 cái if ( a && b ) TH1 : all = 0, TH2: ít nhất 1 tham số if ( a || b || c ) {
+  trước khi cho vào hàm lọc tổng thì cần phải xem cái này nào bằng 0, ít nhất 1 tham số sai sẽ trả về kết quả json{a: not movie theo data input }
+
+  truyền tham số a, b, c này vào để tìm trong filter (a, b, c có giá trị )
+}
+
+Nếu 1TH trả về = 0, thì viết như hàm ban đầu + 
+Nếu 2TH trả về = 0, thì viết như hàm ban đầu + 
+Nếu 3TH trả về = 0, thì viết như hàm ban đầu + 
+Nếu 4TH trả về = 0, thì viết như hàm ban đầu + 
+
+Hàm lọc tổng ban đầu 
+
+if (language && mediatype && year) {
+  sortmovies = dataAdvance.results.filter(
+    (e) =>
+      e.media_type === mediatype &&
+      e.original_language === language &&
+      // regular expression
+      (new Date(e.first_air_date).getFullYear() ||
+        new Date(e.release_date).getFullYear() === Number(year))
+  );
+}
+
+
+// Hàm test thử các chức năng giai đoạn đầu ( AlldataMovies )
+
+// Lấy dữ liệu từ data xong thao tác logic để biến dữ liệu thô thành dữ liệu chuẩn để hiện ra màn hình
+
+const Alldatamovies = JSON.parse(
+  fs.readFileSync(p, "utf-8", (err, data) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    console.log(data);
+  })
+);
+
+thu() {
+  getAlldataMoviesList((data) => {
+    const genreMovies = JSON.parse(
+      fs.readFileSync(g, "utf-8", (err) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+      })
+    );
+    const genreName = genreMovies.find((e) => e.id === 18); // Lay object genre tuong ung (this.id)
+    const CompareIdGenre = (genreid) => {
+      return genreid.find((id) => id === 18); // Trả về một genre-id mà khách đã nhập (this.id)
+    };
+    const RelateGenreMovies = data.filter((id) =>
+      CompareIdGenre(id.genre_ids)
+    ); // Trả về toàn bộ movies có genre-id tương ứng
+    return {
+      results: RelateGenreMovies,
+      page: 1,
+      total_pages:
+        RelateGenreMovies.length > 20
+          ? (RelateGenreMovies.length / 20).toFixed(0)
+          : 1,
+      genre_name: genreName.name,
+    };
+  });
+}
+
+
+// Tạo hàm lọc lượt xem cao của movielist ( controllers movies )
+
+exports.DataGenreMovies5 = (req, res, next) => {
+  const genreMovie = new Movies(test); // Truyen du lieu ve model lay du lieu
+  genreMovie.takegenre(); // Tra ve du lieu
+  // console.log(genreMovie.id);
+};
